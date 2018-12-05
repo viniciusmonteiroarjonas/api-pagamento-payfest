@@ -1,6 +1,7 @@
 module.exports = function(app) {
     app.post("/cartoes/autoriza",function(req, res) {
       console.log('processando pagamento com cartão');
+      
   
         var cartao = req.body;
   
@@ -11,13 +12,17 @@ module.exports = function(app) {
         req.assert("cvv", "CVV é obrigatório e deve ter 3 caracteres").notEmpty().len(3,3);
   
         var errors = req.validationErrors();
-  
+
+
         if (errors){
+
           console.log("Erros de validação encontrados");
   
           res.status(400).send(errors);
           return;
         }
+
+
         cartao.status = 'AUTORIZADO';
   
         var response = {
@@ -26,5 +31,8 @@ module.exports = function(app) {
   
         res.status(201).json(response);
         return;
+
+
     });
+
   }
